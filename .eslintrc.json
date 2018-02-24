@@ -1,0 +1,18 @@
+{
+  "extends": ["airbnb", "plugin:flowtype/recommended"],
+  "parser": "babel-eslint",
+  "plugins": ["react", "flowtype", "jsx-a11y", "import"],
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "no-class-assign": 0,
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": 0,
+    "arrow-body-style": 0,
+    "arrow-parens": 0,
+    "no-console": 0,
+    "space-before-function-paren": 0
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "verdgas",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "babel-jest": "22.0.6",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.7.0",
+    "fs-extra": "^4.0.2",
+    "jest": "22.0.6",
+    "prettier": "^1.10.2",
+    "react-test-renderer": "16.2.0",
+    "replace-in-file": "^3.0.0"
+  },
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "rename": "node ./bin/rename.js",
+    "start": "react-native start",
+    "test": "jest",
+    "flow start": "flow start",
+    "flow stop": "flow stop",
+    "flow status": "flow status",
+    "flow coverage": "flow coverage"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "fbjs": "^0.8.16",
+    "flow-bin": "0.42.0",
+    "lodash": "^4.17.5",
+    "react": "^16.2.0",
+    "react-native": "^0.52.0",
+    "react-native-firebase": "^3.2.2",
+    "react-navigation": "^1.1.2",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
+    "redux-persist": "^5.9.1",
+    "redux-thunk": "^2.2.0"
+  }
+}
