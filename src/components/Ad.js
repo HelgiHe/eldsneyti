@@ -4,7 +4,7 @@ import firebase from 'react-native-firebase';
 const { Banner } = firebase.admob;
 const { AdRequest } = firebase.admob;
 const request = new AdRequest();
-request.addKeyword('gas');
+request.addKeyword();
 
 export default function Ad() {
   return (

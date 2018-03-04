@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getData } from '../actions';
+import { getData, getUserLocation } from '../actions';
 
 type Props = { getData: () => void };
 
@@ -20,6 +20,7 @@ export default function(ComposedComponent) {
   function mapDispatchToProps(dispatch) {
     return {
       getData: bindActionCreators(getData, dispatch),
+      getUserLocation: bindActionCreators(getUserLocation, dispatch),
     };
   }
 

@@ -1,12 +1,15 @@
 // @flow
 
 import React, { Component } from 'react';
-import { TabNavigator } from 'react-navigation';
 import { PersistGate } from 'redux-persist/integration/react';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Provider } from 'react-redux';
+
 import configureStore from './store';
-import StationList from './components/StationsList';
-import Ad from './components/Ad';
+import Stations from './screens/StationList';
+import Map from './screens/Map';
+import Settings from './screens/Settings';
+import Tabs from './components/Tabs';
 
 type Props = {};
 
@@ -17,8 +20,14 @@ export default class App extends Component<Props> {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Ad />
-          <StationList />
+          <ScrollableTabView
+            tabBarPosition="bottom"
+            renderTabBar={() => <Tabs />}
+          >
+            <Stations tabLabel="home" />
+            <Map tabLabel="map" />
+            <Settings tabLabel="gear" />
+          </ScrollableTabView>
         </PersistGate>
       </Provider>
     );
