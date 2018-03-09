@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { USER_LOCATION } from './types';
 
-export const setLocation = (location, dispatch) => {
-  dispatch({
+export const setLocation = location => {
+  return {
     type: USER_LOCATION,
     payload: { latitude: location.latitude, longitude: location.longitude },
-  });
+  };
 };
 
 export const getUserLocation = () => {

@@ -9,23 +9,30 @@ import Ad from '../components/Ad';
 import styles from '../styles/map';
 
 type Props = {
-  getUserLocation: () => void,
+  setLocation: () => void,
   location: object,
   stations: object,
 };
 
 class Map extends Component<Props> {
   componentDidMount() {
-    const { getUserLocation } = this.props;
-    getUserLocation();
+    const { setLocation } = this.props;
+    // navigator is a global object and is safe for eslint to ignore
+    // eslint-disable-next-line
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   const { latitude, longitude } = position.coords;
+    //   setLocation({ latitude, longitude });
+    // });
+    // use this for testing on simulator
+    setLocation({ latitude: 64.14688, longitude: -21.89802 });
   }
 
-  // chnage this to match the current  store
-  renderMakers() {
-    const { items } = this.props.store;
-    return items.map(item => {
+  renderMarkers() {
+    const { stations } = this.props.stations;
+    return stations.map(item => {
       return (
-        <MapView.Marker
+        <Marker
+          key={item.key}
           coordinate={{
             longitude: item.geo.lon,
             latitude: item.geo.lat,
@@ -36,21 +43,23 @@ class Map extends Component<Props> {
   }
 
   render() {
-    const { location, stations } = this.props.stations;
+    // create a loading indicator when the user location is being fetched
+    const { latitude, longitude } = this.props.stations.location;
 
     return (
       <View style={styles.mapContainer}>
         <Ad />
-        <MapView
-          style={styles.mapStyle}
-          initialRegion={{
-            latitude: location.latitude,
-            longitude: location.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          onRegionChange
-        />
+        <View style={{ position: 'relative', height: 500 }}>
+          <MapView
+            style={styles.mapStyle}
+            initialRegion={{
+              latitude,
+              longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+        </View>
       </View>
     );
   }

@@ -15,7 +15,6 @@ type Props = {};
 
 export default class App extends Component<Props> {
   render() {
-    // const SuperComponent = StationContainer(StationList);
     const { persistor, store } = configureStore();
     return (
       <Provider store={store}>
