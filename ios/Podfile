@@ -36,7 +36,7 @@ target 'verdgas' do
   pod 'Firebase/Database'
   pod 'Firebase/DynamicLinks'
   pod 'Firebase/Performance'
-  pod 'Firebase/Firestore'
+ # pod 'Firebase/Firestore'
   pod 'Firebase/Messaging'
   pod 'Firebase/RemoteConfig'
   pod 'Firebase/Storage'

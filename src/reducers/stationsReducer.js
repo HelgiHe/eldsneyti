@@ -10,6 +10,7 @@ import {
 const INITAL_STATE = {
   stations: [],
   loading: true,
+  loadingLocation: true,
   location: {},
 };
 
@@ -28,7 +29,7 @@ export default function(state = INITAL_STATE, action) {
         stations: _.sortBy(action.payload, ['bensin95'], 'bensin95'),
       };
     case USER_LOCATION:
-      return { ...state, location: action.payload };
+      return { ...state, location: action.payload, loadingLocation: false };
     default:
       return state;
   }

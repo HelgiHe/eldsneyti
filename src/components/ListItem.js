@@ -21,7 +21,12 @@ export default function({
     <View style={styles.listItemContainer}>
       <View style={styles.textContainer}>
         <Text style={styles.textStyle}>{company}, </Text>
-        <TextInput value={name} style={styles.inputStyle} maxLength={16} />
+        <TextInput
+          editable={false}
+          value={name}
+          style={styles.inputStyle}
+          maxLength={16}
+        />
       </View>
       <View style={styles.textContainer}>
         <Text>{price} </Text>

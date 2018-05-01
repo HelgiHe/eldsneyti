@@ -5,6 +5,10 @@ export const sortByPrice = (dispatch, stations) => {
   dispatch({ type: SORT_BY_PRICE, payload: stations });
 };
 
+export const sortByDistance = () => {
+  // sort by distance,
+};
+
 export const getData = () => {
   return dispatch => {
     axios

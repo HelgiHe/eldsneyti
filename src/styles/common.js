@@ -10,7 +10,8 @@ export const listItemStyle = {
 };
 export const container = {
   flex: 1,
-  margin: 5,
+  marginLeft: 5,
+  marginRight: 5,
 };
 export const mapStyle = {
   flex: 1,
