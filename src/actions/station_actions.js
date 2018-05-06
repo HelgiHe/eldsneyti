@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_DATA, GET_DATA_ERROR, SORT_BY_PRICE } from './types';
+import { LOADING, GET_DATA, GET_DATA_ERROR, SORT_BY_PRICE } from './types';
 
 export const sortByPrice = (dispatch, stations) => {
   dispatch({ type: SORT_BY_PRICE, payload: stations });
@@ -11,6 +11,7 @@ export const sortByDistance = () => {
 
 export const getData = () => {
   return dispatch => {
+    dispatch({ type: LOADING });
     axios
       .get('https://apis.is/petrol')
       .then(response => {

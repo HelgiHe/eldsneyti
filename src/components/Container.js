@@ -25,7 +25,7 @@ export default function(ComposedComponent) {
   }
 
   function mapStateToProps(state) {
-    return { stations: state.stations };
+    return { stations: state.stations, settings: state.settings };
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(StationContainer);

@@ -4,12 +4,13 @@ import React, { Component } from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { TabNavigator } from 'react-navigation';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import configureStore from './store';
 import Settings from './screens/Settings';
 import Stations from './screens/StationList';
-import Map from './screens/Map';
+import Info from './screens/info';
 
 type Props = {};
 
@@ -19,8 +20,8 @@ export default class App extends Component<Props> {
     const MainNavigator = TabNavigator(
       {
         Stöðvar: { screen: Stations },
-        Kort: { screen: Map },
         Stillingar: { screen: Settings },
+        info: { screen: Info },
       },
 
       {
@@ -34,6 +35,8 @@ export default class App extends Component<Props> {
               iconName = 'map';
             } else if (routeName === 'Stillingar') {
               iconName = 'gear';
+            } else if (routeName === 'info') {
+              iconName = 'info';
             }
 
             // You can return any component that you like here! We usually use an

@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import {
   View,
@@ -6,13 +7,30 @@ import {
   Picker,
   Modal,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
-import { container } from '../styles';
+import { connect } from 'react-redux';
+import * as Animatable from 'react-native-animatable';
+import { setGasType, setSelectSortMethod } from '../actions';
+import Ad from '../components/Ad';
+import Styles from '../styles/settingsStyle';
 
-class Settings extends Component {
+type Props = {
+  sortMethod: string,
+  gasType: string,
+  sortMethod: string,
+  setSelectSortMethod: () => void,
+  setGasType: () => void,
+};
+
+class Settings extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { distance: 30, showModal: false };
+    this.setSortMethod = this.setSortMethod.bind(this);
+    this.state = { showModal: false };
+  }
+  setSortMethod(itemValue) {
+    this.props.setSelectSortMethod(itemValue);
   }
   showModal() {
     this.setState({ showModal: true });
@@ -20,11 +38,40 @@ class Settings extends Component {
   closeModal() {
     this.setState({ showModal: false });
   }
+
   render() {
+    const { gasType } = this.props;
     return (
-      <View style={container}>
-        <Text>Stillingar</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+      <View style={{ flex: 1 }}>
+        <View
+          style={{
+            width: '100%',
+            height: 91,
+            backgroundColor: '#233446',
+            marginBottom: 30,
+            justifyContent: 'space-between',
+          }}
+        >
+          <Ad />
+          <View
+            style={{
+              marginLeft: 25,
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Text style={Styles.textStyle}>Stillingar</Text>
+          </View>
+        </View>
+        {/* <View style={{ alignItems: 'center' }}>
+          <Text
+            style={{
+              fontSize: 18,
+              marginBottom: 10,
+            }}
+          >
+            Fjarlægð?
+          </Text>
           <Text style={{}}>{this.state.distance}km.</Text>
         </View>
         <View>
@@ -35,27 +82,143 @@ class Settings extends Component {
             value={this.state.distance}
             onValueChange={value => this.setState({ distance: value })}
           />
-        </View>
-        <TouchableOpacity onPress={this.showModal.bind(this)}>
-          <Text>Flokka eftir pikker</Text>
-        </TouchableOpacity>
-        <Modal animationType="slide" transparent visible={this.state.showModal}>
-          <Picker
+        </View> */}
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text
             style={{
-              height: '40%',
+              fontSize: 18,
+              marginBottom: 10,
+            }}
+          >
+            Tegund?
+          </Text>
+          <View
+            style={{
+              marginBottom: 40,
+              flexDirection: 'row',
+              borderColor: '#233446',
+              borderWidth: 1,
+              borderRadius: 5,
+            }}
+          >
+            <TouchableOpacity
+              onPress={this.props.setGasType.bind(this, '95')}
+              style={[
+                Styles.buttonTypeLeft,
+                gasType === '95'
+                  ? Styles.selectedStyle
+                  : Styles.notSelectedStyle,
+              ]}
+            >
+              <Text
+                style={[
+                  { marginRight: 30 },
+                  gasType === '95'
+                    ? Styles.selectedText
+                    : Styles.notSelectedText,
+                ]}
+              >
+                95 okt.
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.props.setGasType.bind(this, 'disel')}
+              style={[
+                Styles.buttonTypeRight,
+                gasType === 'disel'
+                  ? Styles.selectedStyle
+                  : Styles.notSelectedStyle,
+              ]}
+            >
+              <Text
+                style={[
+                  { marginLeft: 30 },
+                  gasType === 'disel'
+                    ? Styles.selectedText
+                    : Styles.notSelectedText,
+                ]}
+              >
+                Diesel
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <Text
+            style={{
+              fontSize: 18,
+              marginBottom: 10,
+            }}
+          >
+            Röð Lista?
+          </Text>
+          <TouchableOpacity
+            onPress={this.showModal.bind(this)}
+            style={{
+              padding: 10,
+              backgroundColor: '#233446',
+              width: 160,
+              borderRadius: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 16,
+                fontWeight: '700',
+              }}
+            >
+              Verð
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <Modal animationType="none" transparent visible={this.state.showModal}>
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              height: '60%',
+              backgroundColor: 'rgba(0,0,0,0.35)',
+              position: 'relative',
               justifyContent: 'flex-end',
             }}
-            selectedValue="alphabet"
-            onValueChange={itemValue => console.log(itemValue)}
+            activeOpacity={1}
+            onPress={this.closeModal.bind(this)}
           >
-            <Picker.Item label="A-Ö" value="alphabet" />
-            <Picker.Item label="Fjarlægð" value="distance" />
-            <Picker.Item label="Handahófi" value="random" />
-          </Picker>
+            <Animatable.View
+              style={{
+                justifyContent: 'center',
+                height: '30%',
+                backgroundColor: '#FFFEFF',
+                borderColor: 'rgba(94, 94, 94, 0.3)',
+                borderTopWidth: 1,
+              }}
+              animation={Platform.OS === 'ios' ? 'slideInUp' : ''}
+              duration={200}
+              easing="ease-out"
+            >
+              <Picker
+                style={{}}
+                selectedValue={this.props.sortMethod}
+                onValueChange={this.setSortMethod}
+              >
+                <Picker.Item label="Verð" value="priceLow" />
+                <Picker.Item label="Fyrirtæki" value="company" />
+              </Picker>
+            </Animatable.View>
+          </TouchableOpacity>
         </Modal>
       </View>
     );
   }
 }
 
-export default Settings;
+const mapStateToProps = ({ settings }) => {
+  const { gasType, sortMethod } = settings;
+
+  return { gasType, sortMethod };
+};
+
+export default connect(mapStateToProps, {
+  setGasType,
+  setSelectSortMethod,
+})(Settings);
