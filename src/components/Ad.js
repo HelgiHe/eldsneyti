@@ -10,7 +10,13 @@ request.addKeyword();
 
 export default function Ad() {
   return (
-    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#233446',
+      }}
+    >
       <Banner
         unitId="ca-app-pub-3940256099942544/6300978111"
         size="BANNER"

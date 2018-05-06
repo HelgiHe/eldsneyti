@@ -21,7 +21,7 @@ export default {
     color: '#000',
   },
   textStyle: {
-    paddingBottom: 2,
+    paddingBottom: 3,
     color: '#fff',
     fontSize: 20,
     fontWeight: '700',

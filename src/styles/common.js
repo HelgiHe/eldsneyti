@@ -1,5 +1,5 @@
 export const listStyle = {
-  marginTop: 10,
+  backgroundColor: '#fff',
 };
 export const basicTextStyles = {
   fontSize: 16,
