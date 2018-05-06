@@ -31,7 +31,7 @@ class StationList extends Component<Props> {
   componentDidMount() {
     this.getDate();
 
-    StatusBar.setHidden(true);
+    // StatusBar.setHidden(true);
   }
   getDate() {
     const month = new Date().getMonth() + 1;

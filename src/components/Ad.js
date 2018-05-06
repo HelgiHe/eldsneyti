@@ -18,7 +18,7 @@ export default function Ad() {
       }}
     >
       <Banner
-        unitId="ca-app-pub-3940256099942544/6300978111"
+        unitId="ca-app-pub-3190884823397055/6161405638"
         size="BANNER"
         request={request.build()}
         onAdLoaded={() => {

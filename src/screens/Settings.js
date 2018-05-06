@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Slider,
   Picker,
   Modal,
   TouchableOpacity,

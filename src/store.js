@@ -7,18 +7,12 @@ import reducers from './reducers';
 const config = {
   key: 'root',
   storage,
-  // blacklist: ['password'],
-  // whitelist: ['settings', 'form'],
 };
 
 const reducer = persistCombineReducers(config, reducers);
 
 export default function configureStore(initialState = {}) {
-  const store = createStore(
-    reducer,
-    initialState,
-    applyMiddleware(thunk),
-  );
+  const store = createStore(reducer, initialState, applyMiddleware(thunk));
 
   const persistor = persistStore(store);
   return { persistor, store };

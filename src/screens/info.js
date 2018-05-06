@@ -64,13 +64,14 @@ export default class InfoScreen extends Component {
                   onPress={this.openLink.bind(this)}
                   style={{ color: '#0000EE', fontSize: 16 }}
                 >
+                  {' '}
                   gasvaktin.
                 </Text>
               </Text>
               <Text style={{ fontSize: 16 }}>
-                Smáforritið er ætlað til viðmunaðar og engin ábyrgð tekin á þeim
-                upplýsingum sem koma fram, enda geta eldsneytisverð breyst með
-                litlum fyrirvara
+                Smáforritið er eingöngu ætlað til viðmunaðar og engin ábyrgð
+                tekin á þeim upplýsingum sem koma fram, enda geta eldsneytisverð
+                breyst með litlum fyrirvara
               </Text>
             </View>
           </View>
