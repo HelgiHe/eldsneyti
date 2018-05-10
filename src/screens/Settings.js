@@ -14,6 +14,7 @@ import { SafeAreaView } from 'react-navigation';
 import { setGasType, setSelectSortMethod } from '../actions';
 import Ad from '../components/Ad';
 import Styles from '../styles/settingsStyle';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type Props = {
   sortMethod: string,
@@ -201,6 +202,16 @@ class Settings extends Component<Props> {
                 duration={200}
                 easing="ease-out"
               >
+                <View
+                  style={{ backgroundColor: '#fff', alignItems: 'flex-end' }}
+                >
+                  <Icon
+                    name="times"
+                    size={25}
+                    color="#233446"
+                    style={{ margin: 10 }}
+                  />
+                </View>
                 <Picker
                   style={{}}
                   selectedValue={this.props.sortMethod}
