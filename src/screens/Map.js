@@ -8,10 +8,10 @@ import MapMarker from '../components/MapMarker';
 import Container from '../components/Container';
 import Ad from '../components/Ad';
 import styles from '../styles/map';
+import { basicContainer } from '../styles/common';
 
 type Props = {
   setLocation: () => void,
-  loadingLocation: boolean,
   location: object,
   stations: object,
 };
@@ -20,16 +20,33 @@ class Map extends Component<Props> {
   static navigationOptions = {
     title: 'Map',
   };
+  constructor(props) {
+    super(props);
+    this.state = { loading: true };
+  }
+
   componentWillMount() {
-    const { setLocation } = this.props;
-    // navigator is a global object and is safe for eslint to ignore
+    this.currentLocation();
+  }
+
+  currentLocation() {
     // eslint-disable-next-line
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   const { latitude, longitude } = position.coords;
-    //   setLocation({ latitude, longitude });
-    // });
-    // use this for testing on simulator
-    setLocation({ latitude: 64.1468, longitude: -21.898 });
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        const { latitude, longitude } = pos.coords;
+        this.props.setLocation({ lat: latitude, long: longitude });
+        this.setState(() => ({
+          loading: false
+        }));
+      },
+      err => {
+        console.log(err);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 5000,
+      },
+    );
   }
 
   renderMarkers() {
@@ -42,10 +59,9 @@ class Map extends Component<Props> {
   }
 
   render() {
-    // create a loading indicator when the user location is being fetched
-    const { latitude, longitude } = this.props.stations.location;
-    const { loadingLocation } = this.props;
-    if (loadingLocation) {
+    const { lat, long } = this.props.stations.location;
+    const { loading } = this.state;
+    if (loading) {
       return (
         <View>
           <ActivityIndicator size="large" color="#000" />
@@ -53,14 +69,15 @@ class Map extends Component<Props> {
       );
     }
     return (
-      <View style={styles.mapContainer}>
+      <View style={basicContainer}>
         <Ad />
-        <View style={{ position: 'relative', height: 500 }}>
+        <View style={styles.mapContainer}>
           <MapView
             style={styles.mapStyle}
-            initialRegion={{
-              latitude,
-              longitude,
+            showsUserLocation
+            region={{
+              latitude: lat,
+              longitude: long,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}

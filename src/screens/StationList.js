@@ -1,11 +1,11 @@
 // @flow
 
 import React, { Component } from 'react';
-import { View, FlatList, Text, StatusBar } from 'react-native';
+import { View, FlatList, Text } from 'react-native';
 import { sortBy } from 'lodash';
 import { SafeAreaView } from 'react-navigation';
 
-import { listStyle } from '../styles';
+import { listStyle, ScreenContainer } from '../styles';
 import styles from '../styles/stationScreen';
 import ListItem from '../components/ListItem';
 import Container from '../components/Container';
@@ -30,8 +30,6 @@ class StationList extends Component<Props> {
   }
   componentDidMount() {
     this.getDate();
-
-    // StatusBar.setHidden(true);
   }
   getDate() {
     const month = new Date().getMonth() + 1;
@@ -45,8 +43,8 @@ class StationList extends Component<Props> {
     const { month, day } = this.state;
     const sortedBy = sortMethod === 'company' ? 'company' : 'bensin95';
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#233446' }}>
-        <View style={{ width: '100%', height: 70, backgroundColor: '#233446' }}>
+      <SafeAreaView style={ScreenContainer}>
+        <View style={styles.container}>
           <Ad />
           <View
             style={{

@@ -11,10 +11,12 @@ import {
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import { SafeAreaView } from 'react-navigation';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import { setGasType, setSelectSortMethod } from '../actions';
 import Ad from '../components/Ad';
 import Styles from '../styles/settingsStyle';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { ScreenContainer, headerContainer, mainColor } from '../styles/common';
 
 type Props = {
   sortMethod: string,
@@ -43,24 +45,14 @@ class Settings extends Component<Props> {
   render() {
     const { gasType, sortMethod } = this.props;
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#233446' }}>
-        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      <SafeAreaView style={ScreenContainer}>
+        <View style={Styles.contentContainer}>
           <Ad />
           <View
-            style={{
-              width: '100%',
-              height: 41.4,
-              backgroundColor: '#233446',
-              marginBottom: 30,
-              justifyContent: 'flex-end',
-            }}
+            style={headerContainer}
           >
             <View
-              style={{
-                marginLeft: 25,
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-              }}
+              style={Styles.headerContent}
             >
               <Text style={Styles.textStyle}>Stillingar</Text>
             </View>
@@ -85,23 +77,14 @@ class Settings extends Component<Props> {
             onValueChange={value => this.setState({ distance: value })}
           />
         </View> */}
-          <View style={{ flex: 1, alignItems: 'center' }}>
+          <View style={Styles.typeContainer}>
             <Text
-              style={{
-                fontSize: 18,
-                marginBottom: 10,
-              }}
+              style={Styles.sectionHeader}
             >
               Tegund?
             </Text>
             <View
-              style={{
-                marginBottom: 40,
-                flexDirection: 'row',
-                borderColor: '#233446',
-                borderWidth: 1,
-                borderRadius: 5,
-              }}
+              style={Styles.seperatedButtons}
             >
               <TouchableOpacity
                 onPress={this.props.setGasType.bind(this, '95')}
@@ -145,30 +128,16 @@ class Settings extends Component<Props> {
               </TouchableOpacity>
             </View>
             <Text
-              style={{
-                fontSize: 18,
-                marginBottom: 10,
-              }}
+              style={Styles.sectionHeader}
             >
               Röð Lista?
             </Text>
             <TouchableOpacity
               onPress={this.showModal.bind(this)}
-              style={{
-                padding: 10,
-                backgroundColor: '#233446',
-                width: 160,
-                borderRadius: 5,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              style={Styles.buttonStyle}
             >
               <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 16,
-                  fontWeight: '700',
-                }}
+                style={Styles.boldWhiteText}
               >
                 {sortMethod === 'company' ? 'Fyrirtæki' : 'Verð'}
               </Text>
@@ -180,40 +149,27 @@ class Settings extends Component<Props> {
             visible={this.state.showModal}
           >
             <TouchableOpacity
-              style={{
-                flex: 1,
-                height: '60%',
-                backgroundColor: 'rgba(0,0,0,0.35)',
-                position: 'relative',
-                justifyContent: 'flex-end',
-              }}
+              style={Styles.modalContainer}
               activeOpacity={1}
               onPress={this.closeModal.bind(this)}
             >
               <Animatable.View
-                style={{
-                  justifyContent: 'center',
-                  height: '30%',
-                  backgroundColor: '#FFFEFF',
-                  borderColor: 'rgba(94, 94, 94, 0.3)',
-                  borderTopWidth: 1,
-                }}
+                style={Styles.modalStyle}
                 animation={Platform.OS === 'ios' ? 'slideInUp' : ''}
                 duration={200}
                 easing="ease-out"
               >
                 <View
-                  style={{ backgroundColor: '#fff', alignItems: 'flex-end' }}
+                  style={Styles.modalContent}
                 >
                   <Icon
                     name="times"
                     size={25}
-                    color="#233446"
+                    color={mainColor}
                     style={{ margin: 10 }}
                   />
                 </View>
                 <Picker
-                  style={{}}
                   selectedValue={this.props.sortMethod}
                   onValueChange={this.setSortMethod}
                 >

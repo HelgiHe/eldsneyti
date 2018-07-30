@@ -15,13 +15,16 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="main.png" translatesAutoresizingMaskIntoConstraints="NO" id="4tv-lV-YVj">
+                <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="main.png" translatesAutoresizingMaskIntoConstraints="NO" id="4tv-lV-YVj">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="4tv-lV-YVj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BXK-4C-nHn"/>
+                <constraint firstItem="4tv-lV-YVj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Le3-pr-gWT"/>
                 <constraint firstItem="4tv-lV-YVj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Rnl-hv-G22"/>
+                <constraint firstAttribute="trailing" secondItem="4tv-lV-YVj" secondAttribute="trailing" id="Xxm-q6-Gsd"/>
                 <constraint firstItem="4tv-lV-YVj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Y8a-Pp-0Lw"/>
                 <constraint firstItem="4tv-lV-YVj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bJd-t6-qhn"/>
                 <constraint firstAttribute="trailing" secondItem="4tv-lV-YVj" secondAttribute="trailing" id="kMN-aC-6dC"/>
@@ -29,6 +32,7 @@
                 <constraint firstItem="4tv-lV-YVj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qiM-OY-9TY"/>
                 <constraint firstAttribute="trailing" secondItem="4tv-lV-YVj" secondAttribute="trailing" id="rb2-wj-18m"/>
                 <constraint firstAttribute="bottom" secondItem="4tv-lV-YVj" secondAttribute="bottom" id="v5d-8e-7ts"/>
+                <constraint firstAttribute="bottom" secondItem="4tv-lV-YVj" secondAttribute="bottom" id="wST-dd-dfJ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

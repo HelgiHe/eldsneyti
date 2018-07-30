@@ -1,4 +1,9 @@
 export default {
+  container: {
+    width: '100%',
+    height: 70,
+    backgroundColor: '#233446',
+  },
   listItemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',

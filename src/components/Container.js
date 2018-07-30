@@ -1,5 +1,4 @@
 // @flow
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -7,10 +6,10 @@ import { getData, setLocation } from '../actions';
 
 type Props = { getData: () => void };
 
-export default function(ComposedComponent) {
+export default function (ComposedComponent) {
   class StationContainer extends Component<Props> {
     componentDidMount() {
-      this.props.getData();
+      // this.props.getData();
     }
     render() {
       return <ComposedComponent {...this.props} />;

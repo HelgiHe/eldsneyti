@@ -11,6 +11,8 @@ import configureStore from './store';
 import Settings from './screens/Settings';
 import Stations from './screens/StationList';
 import Info from './screens/info';
+import Map from './screens/Map';
+import { secondaryColor, mainColor } from './styles';
 
 type Props = {};
 
@@ -20,6 +22,7 @@ export default class App extends Component<Props> {
     const MainNavigator = TabNavigator(
       {
         Stöðvar: { screen: Stations },
+        Kort: { screen: Map },
         Stillingar: { screen: Settings },
         info: { screen: Info },
       },
@@ -38,17 +41,14 @@ export default class App extends Component<Props> {
             } else if (routeName === 'info') {
               iconName = 'info';
             }
-
-            // You can return any component that you like here! We usually use an
-            // icon component from react-native-vector-icons
             return <Icon name={iconName} size={25} color={tintColor} />;
           },
         }),
         tabBarOptions: {
           style: {
-            backgroundColor: '#233446',
+            backgroundColor: mainColor,
           },
-          activeTintColor: '#dea42d',
+          activeTintColor: secondaryColor,
           inactiveTintColor: 'gray',
         },
         tabBarPosition: 'bottom',

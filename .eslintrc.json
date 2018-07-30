@@ -1,7 +1,15 @@
 {
-  "extends": ["airbnb", "plugin:flowtype/recommended"],
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
   "parser": "babel-eslint",
-  "plugins": ["react", "flowtype", "jsx-a11y", "import"],
+  "plugins": [
+    "react",
+    "flowtype",
+    "jsx-a11y",
+    "import"
+  ],
   "env": {
     "node": true,
     "es6": true
@@ -15,6 +23,7 @@
     "no-console": 0,
     "space-before-function-paren": 0,
     "comma-dangle": 0,
-    "react/jsx-no-bind": 0
+    "react/jsx-no-bind": 0,
+    "class-methods-use-this": 0
   }
 }

@@ -3,53 +3,32 @@ import { View, Text, Linking } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
 import Ad from '../components/Ad';
+import { ScreenContainer, basicTextStyles } from '../styles/common';
+import styles from '../styles/infoScreenStyle';
 
 export default class InfoScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { gasVaktin: 'https://github.com/gasvaktin/gasvaktin' };
-  }
   openLink() {
-    const { gasVaktin } = this.state;
-    // eslint-disable-next-line
-    Linking.openURL(gasVaktin).catch(
-      err => console.error('An error occurred', err)
-      // eslint-disable-next-line
-    );
+    const gasVaktin = 'https://github.com/gasvaktin/gasvaktin';
+
+    Linking.openURL(gasVaktin).catch(err => console.error('An error occurred', err));
   }
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#233446' }}>
+      <SafeAreaView style={ScreenContainer}>
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
           <Ad />
           <View
-            style={{
-              width: '100%',
-              height: 41.4,
-              backgroundColor: '#233446',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}
+            style={styles.headerContainer}
           >
             <Text
-              style={{
-                color: '#fff',
-                fontSize: 20,
-                fontWeight: '700',
-                paddingBottom: 3,
-              }}
+              style={styles.headerText}
             >
               Upplýsingar
             </Text>
           </View>
           <View
-            style={{
-              backgroundColor: '#fff',
-              marginTop: 20,
-              flex: 1,
-              padding: 10,
-            }}
+            style={styles.contentContainer}
           >
             <View>
               <Text style={{ fontSize: 16, marginBottom: 20 }}>
@@ -57,18 +36,18 @@ export default class InfoScreen extends Component {
                 landsins.
               </Text>
               <Text>
-                <Text style={{ fontSize: 16 }}>
+                <Text style={basicTextStyles}>
                   Upplýsingar í apppinu byggja á opnum gögnum frá,
                 </Text>
                 <Text
                   onPress={this.openLink.bind(this)}
-                  style={{ color: '#0000EE', fontSize: 16 }}
+                  style={styles.linkStyle}
                 >
                   {' '}
                   gasvaktin.
                 </Text>
               </Text>
-              <Text style={{ fontSize: 16 }}>
+              <Text style={basicTextStyles}>
                 Smáforritið er eingöngu ætlað til viðmunaðar og engin ábyrgð
                 tekin á þeim upplýsingum sem koma fram, enda geta eldsneytisverð
                 breyst með litlum fyrirvara

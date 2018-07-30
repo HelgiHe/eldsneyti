@@ -1,6 +1,7 @@
 export default {
   mapContainer: {
-    flex: 1,
+    position: 'relative',
+    height: 500
   },
   mapStyle: {
     flex: 1,

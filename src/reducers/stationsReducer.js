@@ -13,7 +13,7 @@ const INITAL_STATE = {
   location: {},
 };
 
-export default function(state = INITAL_STATE, action) {
+export default function (state = INITAL_STATE, action) {
   switch (action.type) {
     case LOADING: {
       return { ...state, loading: true };
