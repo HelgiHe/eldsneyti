@@ -11,6 +11,7 @@ const INITAL_STATE = {
   loading: true,
   loadingLocation: true,
   location: {},
+  total: 0,
 };
 
 export default function (state = INITAL_STATE, action) {
@@ -29,6 +30,7 @@ export default function (state = INITAL_STATE, action) {
       return {
         ...state,
         stations: action.payload,
+        total: action.payload.length,
       };
     case USER_LOCATION:
       return { ...state, location: action.payload, loadingLocation: false };

@@ -20,4 +20,9 @@ export default {
     fontSize: 16,
     fontWeight: '700',
   },
+  dateContainer: {
+    marginRight: 5,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+  }
 };

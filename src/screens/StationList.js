@@ -47,11 +47,7 @@ class StationList extends Component<Props> {
         <View style={styles.container}>
           <Ad />
           <View
-            style={{
-              marginRight: 5,
-              alignItems: 'flex-end',
-              justifyContent: 'flex-end',
-            }}
+            style={styles.dateContainer}
           >
             <Text style={styles.textStyle}>{`${day}/${month}`}/2018</Text>
           </View>
@@ -69,6 +65,7 @@ class StationList extends Component<Props> {
         </View>
         <FlatList
           style={listStyle}
+          initialNumToRender={40}
           onRefresh={() => {
             this.getDate();
             this.props.getData();
