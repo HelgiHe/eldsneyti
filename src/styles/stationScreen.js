@@ -7,7 +7,6 @@ export default {
   listItemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#233446',
   },
   textContainer: {
     flexDirection: 'row',

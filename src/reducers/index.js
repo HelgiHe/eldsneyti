@@ -2,6 +2,6 @@ import StationsReducer from './stationsReducer';
 import SettingsReducer from './settingsReducer';
 
 export default {
-  stations: StationsReducer,
+  allStations: StationsReducer,
   settings: SettingsReducer,
 };

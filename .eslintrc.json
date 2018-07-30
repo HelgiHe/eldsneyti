@@ -24,6 +24,7 @@
     "space-before-function-paren": 0,
     "comma-dangle": 0,
     "react/jsx-no-bind": 0,
-    "class-methods-use-this": 0
+    "class-methods-use-this": 0,
+    "object-curly-newline": 0
   }
 }

@@ -2,10 +2,11 @@
 
 import React, { Component } from 'react';
 import { View, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 
+import { setLocation } from '../actions';
 import MapMarker from '../components/MapMarker';
-import Container from '../components/Container';
 import Ad from '../components/Ad';
 import styles from '../styles/map';
 import { basicContainer } from '../styles/common';
@@ -51,15 +52,14 @@ class Map extends Component<Props> {
 
   renderMarkers() {
     const { stations } = this.props;
-    const gasStations = stations.stations;
 
-    return gasStations.map(item => {
+    return stations.map(item => {
       return <MapMarker item={item} key={item.key} />;
     });
   }
 
   render() {
-    const { lat, long } = this.props.stations.location;
+    const { lat, long } = this.props.location;
     const { loading } = this.state;
     if (loading) {
       return (
@@ -90,4 +90,11 @@ class Map extends Component<Props> {
   }
 }
 
-export default Container(Map);
+const mapStateToProps = ({ allStations }) => {
+  const { stations, location } = allStations;
+
+  return { stations, location };
+};
+
+export default connect(mapStateToProps, { setLocation })(Map);
+

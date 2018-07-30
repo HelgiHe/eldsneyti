@@ -23,7 +23,7 @@ export const basicContainer = {
 export const headerContainer = {
   width: '100%',
   height: 41.4,
-  backgroundColor: '#233446',
+  backgroundColor: mainColor,
   marginBottom: 30,
   justifyContent: 'flex-end',
 };

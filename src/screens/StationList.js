@@ -2,13 +2,14 @@
 
 import React, { Component } from 'react';
 import { View, FlatList, Text } from 'react-native';
+import { connect } from 'react-redux';
 import { sortBy } from 'lodash';
 import { SafeAreaView } from 'react-navigation';
 
+import { getData } from '../actions';
 import { listStyle, ScreenContainer } from '../styles';
 import styles from '../styles/stationScreen';
 import ListItem from '../components/ListItem';
-import Container from '../components/Container';
 import Ad from '../components/Ad';
 
 type Props = {
@@ -16,7 +17,6 @@ type Props = {
   sortMethod: string,
   loading: boolean,
   stations: Array<object>,
-  settings: object,
   getData: () => void,
 };
 
@@ -29,6 +29,7 @@ class StationList extends Component<Props> {
     this.state = { month: '', day: '' };
   }
   componentDidMount() {
+    this.props.getData();
     this.getDate();
   }
   getDate() {
@@ -38,8 +39,7 @@ class StationList extends Component<Props> {
   }
 
   render() {
-    const { loading } = this.props.stations;
-    const { gasType, sortMethod } = this.props.settings;
+    const { stations, loading, gasType, sortMethod } = this.props;
     const { month, day } = this.state;
     const sortedBy = sortMethod === 'company' ? 'company' : 'bensin95';
     return (
@@ -65,14 +65,14 @@ class StationList extends Component<Props> {
         </View>
         <FlatList
           style={listStyle}
-          initialNumToRender={40}
+          initialNumToRender={30}
           onRefresh={() => {
             this.getDate();
             this.props.getData();
           }}
           refreshing={loading}
-          data={sortBy(this.props.stations.stations, [sortedBy], sortedBy)}
-          renderItem={({ item }) => {
+          data={sortBy(stations, [sortedBy], sortedBy)}
+          renderItem={({ item, index }) => {
             return (
               <ListItem
                 company={item.company}
@@ -84,6 +84,8 @@ class StationList extends Component<Props> {
                 }
                 name={item.name}
                 currency="kr."
+                background={index % 2 === 0 ? '#fff' : '#235789'}
+                textColor={index % 2 === 0 ? '#000' : '#fff'}
               />
             );
           }}
@@ -93,5 +95,12 @@ class StationList extends Component<Props> {
   }
 }
 
+const mapStateToProps = ({ allStations, settings }) => {
+  const { stations, loading } = allStations;
+  const { gasType, sortMethod } = settings;
+
+  return { stations, loading, gasType, sortMethod };
+};
+
 // wrap the compoennt in the Hoc to receive it's props
-export default Container(StationList);
+export default connect(mapStateToProps, { getData })(StationList);

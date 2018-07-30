@@ -4,15 +4,13 @@ export default {
   listItemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  textContainer: {
+    flexDirection: 'row',
     marginTop: 5,
     marginBottom: 3,
     marginLeft: 5,
     marginRight: 5,
-    borderColor: 'rgba(94, 94, 94, 0.3)',
-    borderBottomWidth: 1,
-  },
-  textContainer: {
-    flexDirection: 'row',
   },
   inputStyle: {
     height: 20,
@@ -23,5 +21,10 @@ export default {
   textStyle: {
     ...basicTextStyles,
     paddingBottom: 2,
+    fontWeight: '700',
   },
+  priceText: {
+    ...basicTextStyles,
+    paddingBottom: 2,
+  }
 };
