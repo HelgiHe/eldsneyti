@@ -27,6 +27,11 @@ export const headerContainer = {
   marginBottom: 30,
   justifyContent: 'flex-end',
 };
+export const spinnerContainer = {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 export const mapStyle = {
   flex: 1,
 };

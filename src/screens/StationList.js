@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { View, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { sortBy } from 'lodash';
-import { SafeAreaView } from 'react-navigation';
 
 import { getData } from '../actions';
 import { listStyle, ScreenContainer } from '../styles';
@@ -26,7 +25,7 @@ class StationList extends Component<Props> {
   };
   constructor(props) {
     super(props);
-    this.state = { month: '', day: '' };
+    this.state = { month: '', day: '', year: '' };
   }
   componentDidMount() {
     this.props.getData();
@@ -35,22 +34,19 @@ class StationList extends Component<Props> {
   getDate() {
     const month = new Date().getMonth() + 1;
     const day = new Date().getDate();
-    this.setState({ month, day });
+    const year = new Date().getFullYear();
+    this.setState({ month, day, year });
   }
 
   render() {
     const { stations, loading, gasType, sortMethod } = this.props;
-    const { month, day } = this.state;
+    const { month, day, year } = this.state;
     const sortedBy = sortMethod === 'company' ? 'company' : 'bensin95';
     return (
-      <SafeAreaView style={ScreenContainer}>
-        <View style={styles.container}>
-          <Ad />
-          <View
-            style={styles.dateContainer}
-          >
-            <Text style={styles.textStyle}>{`${day}/${month}`}/2018</Text>
-          </View>
+      <View style={ScreenContainer}>
+        <Ad />
+        <View style={styles.dateContainer}>
+          <Text style={styles.textStyle}>{`${day}/${month}/${year}`}</Text>
         </View>
         <View style={styles.listItemContainer}>
           <View style={styles.textContainer}>
@@ -90,7 +86,7 @@ class StationList extends Component<Props> {
             );
           }}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 }

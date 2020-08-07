@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, Linking } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
 
 import Ad from '../components/Ad';
 import { ScreenContainer, basicTextStyles } from '../styles/common';
@@ -10,26 +9,20 @@ export default class InfoScreen extends Component {
   openLink() {
     const gasVaktin = 'https://github.com/gasvaktin/gasvaktin';
 
-    Linking.openURL(gasVaktin).catch(err => console.error('An error occurred', err));
+    Linking.openURL(gasVaktin).catch(err =>
+      console.error('An error occurred', err)
+    );
   }
 
   render() {
     return (
-      <SafeAreaView style={ScreenContainer}>
+      <View style={ScreenContainer}>
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
           <Ad />
-          <View
-            style={styles.headerContainer}
-          >
-            <Text
-              style={styles.headerText}
-            >
-              Upplýsingar
-            </Text>
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>Upplýsingar</Text>
           </View>
-          <View
-            style={styles.contentContainer}
-          >
+          <View style={styles.contentContainer}>
             <View>
               <Text style={{ fontSize: 16, marginBottom: 20 }}>
                 Þetta smáforrit sýnir verð á bensíni á flestum bensínstöðvum
@@ -55,7 +48,7 @@ export default class InfoScreen extends Component {
             </View>
           </View>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }

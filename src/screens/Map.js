@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 
@@ -9,7 +9,11 @@ import { setLocation } from '../actions';
 import MapMarker from '../components/MapMarker';
 import Ad from '../components/Ad';
 import styles from '../styles/map';
-import { basicContainer } from '../styles/common';
+import {
+  spinnerContainer,
+  headerContainer,
+  ScreenContainer,
+} from '../styles/common';
 
 type Props = {
   setLocation: () => void,
@@ -19,7 +23,7 @@ type Props = {
 
 class Map extends Component<Props> {
   static navigationOptions = {
-    title: 'Map',
+    title: 'Kort',
   };
   constructor(props) {
     super(props);
@@ -37,7 +41,7 @@ class Map extends Component<Props> {
         const { latitude, longitude } = pos.coords;
         this.props.setLocation({ lat: latitude, long: longitude });
         this.setState(() => ({
-          loading: false
+          loading: false,
         }));
       },
       err => {
@@ -46,7 +50,7 @@ class Map extends Component<Props> {
       {
         enableHighAccuracy: true,
         timeout: 5000,
-      },
+      }
     );
   }
 
@@ -63,27 +67,34 @@ class Map extends Component<Props> {
     const { loading } = this.state;
     if (loading) {
       return (
-        <View>
+        <View style={spinnerContainer}>
           <ActivityIndicator size="large" color="#000" />
         </View>
       );
     }
     return (
-      <View style={basicContainer}>
-        <Ad />
-        <View style={styles.mapContainer}>
-          <MapView
-            style={styles.mapStyle}
-            showsUserLocation
-            region={{
-              latitude: lat,
-              longitude: long,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            {this.renderMarkers()}
-          </MapView>
+      <View style={ScreenContainer}>
+        <View style={styles.contentContainer}>
+          <Ad />
+          <View style={headerContainer}>
+            <View style={styles.headerContent}>
+              <Text style={styles.textStyle}>Kort</Text>
+            </View>
+          </View>
+          <View style={styles.mapContainer}>
+            <MapView
+              style={styles.mapStyle}
+              showsUserLocation
+              region={{
+                latitude: lat,
+                longitude: long,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            >
+              {this.renderMarkers()}
+            </MapView>
+          </View>
         </View>
       </View>
     );
@@ -97,4 +108,3 @@ const mapStateToProps = ({ allStations }) => {
 };
 
 export default connect(mapStateToProps, { setLocation })(Map);
-

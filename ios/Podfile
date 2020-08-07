@@ -1,5 +1,8 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '9.0'
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '10.0'
 
 target 'verdgas' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
@@ -9,41 +12,22 @@ target 'verdgas' do
   rn_maps_path = '../node_modules/react-native-maps'
 
   # Pods for verdgas
-  pod 'yoga', path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
-  pod 'React', path: rn_path, subspecs: [
-    'Core',
-    'RCTActionSheet',
-    'RCTAnimation',
-    'RCTGeolocation',
-    'RCTImage',
-    'RCTLinkingIOS',
-    'RCTNetwork',
-    'RCTSettings',
-    'RCTText',
-    'RCTVibration',
-    'RCTWebSocket',
-    'BatchedBridge'
-  ]
+  config = use_native_modules!
+
+  use_react_native!(:path => config["reactNativePath"])
+
+  target 'verdgasTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
   pod 'react-native-maps', path: rn_maps_path
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-  # Required by RNFirebase
-  pod 'Firebase/Core'
 
-  # [OPTIONAL PODS] - comment out pods for firebase products you won't be using.
-  pod 'Firebase/AdMob'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Crash'
-  pod 'Firebase/Database'
-  pod 'Firebase/DynamicLinks'
-  pod 'Firebase/Performance'
- # pod 'Firebase/Firestore'
-  pod 'Firebase/Messaging'
-  pod 'Firebase/RemoteConfig'
-  pod 'Firebase/Storage'
-  
-  pod 'Fabric', '~> 1.7.2'
-  pod 'Crashlytics', '~> 3.9.3'
 end
+
+
+
   # maps
   post_install do |installer|
     installer.pods_project.targets.each do |target|

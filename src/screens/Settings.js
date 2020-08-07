@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
-import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { setGasType, setSelectSortMethod } from '../actions';
@@ -45,15 +44,11 @@ class Settings extends Component<Props> {
   render() {
     const { gasType, sortMethod } = this.props;
     return (
-      <SafeAreaView style={ScreenContainer}>
+      <View style={ScreenContainer}>
         <View style={Styles.contentContainer}>
           <Ad />
-          <View
-            style={headerContainer}
-          >
-            <View
-              style={Styles.headerContent}
-            >
+          <View style={headerContainer}>
+            <View style={Styles.headerContent}>
               <Text style={Styles.textStyle}>Stillingar</Text>
             </View>
           </View>
@@ -78,14 +73,8 @@ class Settings extends Component<Props> {
           />
         </View> */}
           <View style={Styles.typeContainer}>
-            <Text
-              style={Styles.sectionHeader}
-            >
-              Tegund?
-            </Text>
-            <View
-              style={Styles.seperatedButtons}
-            >
+            <Text style={Styles.sectionHeader}>Tegund?</Text>
+            <View style={Styles.seperatedButtons}>
               <TouchableOpacity
                 onPress={this.props.setGasType.bind(this, '95')}
                 style={[
@@ -127,18 +116,12 @@ class Settings extends Component<Props> {
                 </Text>
               </TouchableOpacity>
             </View>
-            <Text
-              style={Styles.sectionHeader}
-            >
-              Röð Lista?
-            </Text>
+            <Text style={Styles.sectionHeader}>Röð Lista?</Text>
             <TouchableOpacity
               onPress={this.showModal.bind(this)}
               style={Styles.buttonStyle}
             >
-              <Text
-                style={Styles.boldWhiteText}
-              >
+              <Text style={Styles.boldWhiteText}>
                 {sortMethod === 'company' ? 'Fyrirtæki' : 'Verð'}
               </Text>
             </TouchableOpacity>
@@ -159,9 +142,7 @@ class Settings extends Component<Props> {
                 duration={200}
                 easing="ease-out"
               >
-                <View
-                  style={Styles.modalContent}
-                >
+                <View style={Styles.modalContent}>
                   <Icon
                     name="times"
                     size={25}
@@ -180,7 +161,7 @@ class Settings extends Component<Props> {
             </TouchableOpacity>
           </Modal>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
