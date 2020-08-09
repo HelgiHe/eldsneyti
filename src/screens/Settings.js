@@ -1,13 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  Picker,
-  Modal,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
+import { View, Text, Modal, TouchableOpacity, Platform } from 'react-native';
+import { Picker } from '@react-native-community/picker';
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -43,6 +37,7 @@ class Settings extends Component<Props> {
 
   render() {
     const { gasType, sortMethod } = this.props;
+    console.log({ sortMethod });
     return (
       <View style={ScreenContainer}>
         <View style={Styles.contentContainer}>
@@ -52,26 +47,7 @@ class Settings extends Component<Props> {
               <Text style={Styles.textStyle}>Stillingar</Text>
             </View>
           </View>
-          {/* <View style={{ alignItems: 'center' }}>
-          <Text
-            style={{
-              fontSize: 18,
-              marginBottom: 10,
-            }}
-          >
-            Fjarlægð?
-          </Text>
-          <Text style={{}}>{this.state.distance}km.</Text>
-        </View>
-        <View>
-          <Slider
-            minimumValue={10}
-            maximumValue={200}
-            step={10}
-            value={this.state.distance}
-            onValueChange={value => this.setState({ distance: value })}
-          />
-        </View> */}
+
           <View style={Styles.typeContainer}>
             <Text style={Styles.sectionHeader}>Tegund?</Text>
             <View style={Styles.seperatedButtons}>
@@ -131,11 +107,11 @@ class Settings extends Component<Props> {
             transparent
             visible={this.state.showModal}
           >
-            <TouchableOpacity
-              style={Styles.modalContainer}
-              activeOpacity={1}
-              onPress={this.closeModal.bind(this)}
-            >
+            <View style={Styles.modalContainer}>
+              <TouchableOpacity
+                style={{ flex: 1 }}
+                onPress={this.closeModal.bind(this)}
+              ></TouchableOpacity>
               <Animatable.View
                 style={Styles.modalStyle}
                 animation={Platform.OS === 'ios' ? 'slideInUp' : ''}
@@ -143,28 +119,34 @@ class Settings extends Component<Props> {
                 easing="ease-out"
               >
                 <View style={Styles.modalContent}>
-                  <Icon
-                    name="times"
-                    size={25}
-                    color={mainColor}
-                    style={{ margin: 10 }}
-                  />
+                  <TouchableOpacity onPress={this.closeModal.bind(this)}>
+                    <Icon
+                      name="times"
+                      size={25}
+                      color={mainColor}
+                      style={{ margin: 10 }}
+                    />
+                  </TouchableOpacity>
                 </View>
                 <Picker
-                  selectedValue={this.props.sortMethod}
-                  onValueChange={this.setSortMethod}
+                  selectedValue={sortMethod}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.props.setSelectSortMethod(itemValue)
+                  }
                 >
                   <Picker.Item label="Verð" value="priceLow" />
                   <Picker.Item label="Fyrirtæki" value="company" />
                 </Picker>
               </Animatable.View>
-            </TouchableOpacity>
+            </View>
           </Modal>
         </View>
       </View>
     );
   }
 }
+
+//                   onValueChange={() => this.setSortMethod}
 
 const mapStateToProps = ({ settings }) => {
   const { gasType, sortMethod } = settings;

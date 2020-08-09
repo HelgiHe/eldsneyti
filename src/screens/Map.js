@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
-
+import Geolocation from '@react-native-community/geolocation';
 import { setLocation } from '../actions';
 import MapMarker from '../components/MapMarker';
 import Ad from '../components/Ad';
@@ -36,7 +36,7 @@ class Map extends Component<Props> {
 
   currentLocation() {
     // eslint-disable-next-line
-    navigator.geolocation.getCurrentPosition(
+    Geolocation.getCurrentPosition(
       pos => {
         const { latitude, longitude } = pos.coords;
         this.props.setLocation({ lat: latitude, long: longitude });
@@ -52,6 +52,10 @@ class Map extends Component<Props> {
         timeout: 5000,
       }
     );
+
+    // this.setState(() => ({
+    //   loading: false,
+    // }));
   }
 
   renderMarkers() {

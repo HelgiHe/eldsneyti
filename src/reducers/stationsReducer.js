@@ -10,11 +10,11 @@ const INITAL_STATE = {
   stations: [],
   loading: true,
   loadingLocation: true,
-  location: {},
+  location: { lat: 37.78825, long: -122.4324 },
   total: 0,
 };
 
-export default function (state = INITAL_STATE, action) {
+export default function(state = INITAL_STATE, action) {
   switch (action.type) {
     case LOADING: {
       return { ...state, loading: true };

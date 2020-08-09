@@ -21,6 +21,22 @@ export default class App extends Component<Props> {
   render() {
     const Tab = createBottomTabNavigator();
 
+    // const screenOptions = ({ route }) => ({
+    //   tabBarIcon: ({ focused, color, size }) => {
+    //     let iconName;
+    //     if (route === 'Stöðvar') {
+    //       iconName = 'rocket';
+    //     } else if (route === 'Kort') {
+    //       iconName = 'map';
+    //     } else if (route === 'Stillingar') {
+    //       iconName = 'gear';
+    //     } else if (route === 'info') {
+    //       iconName = 'info';
+    //     }
+    //     return <Icon name={iconName} size={25} color={color} />;
+    //   },
+    // });
+
     // const { persistor, store } = configureStore();
     // const MainNavigator = TabNavigator(
     //   {
@@ -61,11 +77,34 @@ export default class App extends Component<Props> {
     return (
       <Provider store={store}>
         <PersistGate loading={<View />} persistor={persistor}>
-          <Text>akodjfl</Text>
           <NavigationContainer>
-            <Tab.Navigator>
-              <Tab.Screen name="Home" component={Stations} />
-              <Tab.Screen name="Settings" component={Settings} />
+            <Tab.Navigator
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                  let iconName;
+                  if (route.name === 'Stöðvar') {
+                    iconName = 'home';
+                  } else if (route.name === 'Kort') {
+                    iconName = 'map';
+                  } else if (route.name === 'Stillingar') {
+                    iconName = 'gear';
+                  } else if (route.name === 'Um appið') {
+                    iconName = 'info';
+                  }
+                  return <Icon name={iconName} size={25} color={color} />;
+                },
+              })}
+              tabBarOptions={{
+                activeTintColor: secondaryColor,
+                inactiveTintColor: 'gray',
+                activeBackgroundColor: mainColor,
+                inactiveBackgroundColor: mainColor,
+              }}
+            >
+              <Tab.Screen name="Stöðvar" component={Stations} />
+              <Tab.Screen name="Kort" component={Map} />
+              <Tab.Screen name="Stillingar" component={Settings} />
+              <Tab.Screen name="Um appið" component={Info} />
             </Tab.Navigator>
           </NavigationContainer>
         </PersistGate>
