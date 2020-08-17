@@ -1,4 +1,11 @@
-import { SET_GAS_TYPE, SET_SORT_BY } from './types';
+import { SET_GAS_TYPE, SET_SORT_BY, SET_DISTANCE_FILTER } from './types';
+
+export const setDistanceFilter = value => {
+  return {
+    type: SET_DISTANCE_FILTER,
+    payload: value,
+  };
+};
 
 export const setSelectSortMethod = method => {
   return {

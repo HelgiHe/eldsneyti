@@ -5,16 +5,21 @@ import { Picker } from '@react-native-community/picker';
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Slider from '@react-native-community/slider';
+import Geolocation from '@react-native-community/geolocation';
+import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
-import { setGasType, setSelectSortMethod } from '../actions';
+import { setDistanceFilter, setGasType, setSelectSortMethod } from '../actions';
 import Ad from '../components/Ad';
 import Styles from '../styles/settingsStyle';
 import { ScreenContainer, headerContainer, mainColor } from '../styles/common';
 
 type Props = {
+  distanceFilter: string,
   sortMethod: string,
   gasType: string,
   sortMethod: string,
+  setDistanceFilter: (val: string) => void,
   setSelectSortMethod: () => void,
   setGasType: () => void,
 };
@@ -24,6 +29,34 @@ class Settings extends Component<Props> {
     super(props);
     this.setSortMethod = this.setSortMethod.bind(this);
     this.state = { showModal: false };
+  }
+  componentDidMount() {
+    check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
+      .then(result => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log(
+              'This feature is not available (on this device / in this context)'
+            );
+            break;
+          case RESULTS.DENIED:
+            console.log(
+              'The permission has not been requested / is denied but requestable'
+            );
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+          default:
+            console.log('default');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
   setSortMethod(itemValue) {
     this.props.setSelectSortMethod(itemValue);
@@ -36,8 +69,8 @@ class Settings extends Component<Props> {
   }
 
   render() {
-    const { gasType, sortMethod } = this.props;
-    console.log({ sortMethod });
+    const { distanceFilter, gasType, sortMethod } = this.props;
+
     return (
       <View style={ScreenContainer}>
         <View style={Styles.contentContainer}>
@@ -47,7 +80,6 @@ class Settings extends Component<Props> {
               <Text style={Styles.textStyle}>Stillingar</Text>
             </View>
           </View>
-
           <View style={Styles.typeContainer}>
             <Text style={Styles.sectionHeader}>Tegund?</Text>
             <View style={Styles.seperatedButtons}>
@@ -92,6 +124,24 @@ class Settings extends Component<Props> {
                 </Text>
               </TouchableOpacity>
             </View>
+            <View>
+              <Text>Sía eftir fjarlægð</Text>
+              <Slider
+                step={10}
+                style={{ width: 250, height: 40 }}
+                minimumValue={10}
+                maximumValue={200}
+                minimumTrackTintColor="#000"
+                maximumTrackTintColor="#B8BDC0"
+                onValueChange={val => this.props.setDistanceFilter(val)}
+                value={parseInt(distanceFilter, 10)}
+              />
+              <Text>
+                {parseInt(distanceFilter, 10) < 200
+                  ? `${distanceFilter}km`
+                  : 'Engin sía'}
+              </Text>
+            </View>
             <Text style={Styles.sectionHeader}>Röð Lista?</Text>
             <TouchableOpacity
               onPress={this.showModal.bind(this)}
@@ -111,7 +161,7 @@ class Settings extends Component<Props> {
               <TouchableOpacity
                 style={{ flex: 1 }}
                 onPress={this.closeModal.bind(this)}
-              ></TouchableOpacity>
+              />
               <Animatable.View
                 style={Styles.modalStyle}
                 animation={Platform.OS === 'ios' ? 'slideInUp' : ''}
@@ -130,7 +180,7 @@ class Settings extends Component<Props> {
                 </View>
                 <Picker
                   selectedValue={sortMethod}
-                  onValueChange={(itemValue, itemIndex) =>
+                  onValueChange={itemValue =>
                     this.props.setSelectSortMethod(itemValue)
                   }
                 >
@@ -146,15 +196,15 @@ class Settings extends Component<Props> {
   }
 }
 
-//                   onValueChange={() => this.setSortMethod}
+const mapStateToProps = ({ settings, allStations }) => {
+  const { distanceFilter, gasType, sortMethod } = settings;
+  const { loadingLocation } = allStations;
 
-const mapStateToProps = ({ settings }) => {
-  const { gasType, sortMethod } = settings;
-
-  return { gasType, sortMethod };
+  return { gasType, distanceFilter, sortMethod, loadingLocation };
 };
 
 export default connect(mapStateToProps, {
+  setDistanceFilter,
   setGasType,
   setSelectSortMethod,
 })(Settings);

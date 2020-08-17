@@ -10,7 +10,7 @@ target 'verdgas' do
 
   rn_path = '../node_modules/react-native'
   rn_maps_path = '../node_modules/react-native-maps'
-
+  permissions_path = '../node_modules/react-native-permissions/ios'
   # Pods for verdgas
   config = use_native_modules!
 
@@ -20,7 +20,7 @@ target 'verdgas' do
     inherit! :complete
     # Pods for testing
   end
-
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse.podspec"
   pod 'react-native-maps', path: rn_maps_path
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   pod 'react-native-geolocation', path: '../node_modules/@react-native-community/geolocation'

@@ -11,3 +11,4 @@ export const USER_LOCATION = 'USER_LOCATION';
 // settings
 export const SET_GAS_TYPE = 'SET_GAS_TYPE';
 export const SET_SORT_BY = 'SET_SORT_BY';
+export const SET_DISTANCE_FILTER = 'SET_DISTANCE_FILTER';
