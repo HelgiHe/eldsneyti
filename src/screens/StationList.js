@@ -4,19 +4,25 @@ import React, { Component } from 'react';
 import { View, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { sortBy } from 'lodash';
+import Geolocation from '@react-native-community/geolocation';
 
-import { getData } from '../actions';
+import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import { getData, setLocation, filterByDistance } from '../actions';
 import { listStyle, ScreenContainer } from '../styles';
 import styles from '../styles/stationScreen';
 import ListItem from '../components/ListItem';
 import Ad from '../components/Ad';
+import { getDistanceFromLatLonInKm } from '../lib';
 
 type Props = {
+  distanceFilter: string,
   gasType: string,
   sortMethod: string,
   loading: boolean,
+  location: object,
   stations: Array<object>,
   getData: () => void,
+  setLocation: () => object,
 };
 
 class StationList extends Component<Props> {
@@ -28,9 +34,61 @@ class StationList extends Component<Props> {
     this.state = { month: '', day: '', year: '' };
   }
   componentDidMount() {
+    this.requestPosition();
     this.props.getData();
     this.getDate();
   }
+
+  componentDidUpdate(prevState, prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.filterByDistance();
+    }
+  }
+
+  requestPosition() {
+    Geolocation.getCurrentPosition(
+      pos => {
+        const { latitude, longitude } = pos.coords;
+        this.props.setLocation({ lat: latitude, long: longitude });
+      },
+      err => {
+        console.log(err);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 5000,
+      }
+    );
+  }
+
+  filterByDistance() {
+    check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
+      .then(result => {
+        if (result === 'granted') {
+          const { distanceFilter, stations, location } = this.props;
+          if (!stations.length) {
+            return;
+          }
+          // lat1, lon1, lat2, lon2
+          const { lat, long } = location;
+          const filteredStations = stations.filter(station => {
+            const dist = getDistanceFromLatLonInKm(
+              lat,
+              long,
+              station.geo.lat,
+              station.geo.lon
+            );
+            return dist < distanceFilter;
+          });
+          this.props.filterByDistance(filteredStations);
+          console.log(filteredStations);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   getDate() {
     const month = new Date().getMonth() + 1;
     const day = new Date().getDate();
@@ -42,6 +100,7 @@ class StationList extends Component<Props> {
     const { stations, loading, gasType, sortMethod } = this.props;
     const { month, day, year } = this.state;
     const sortedBy = sortMethod === 'company' ? 'company' : 'bensin95';
+
     return (
       <View style={ScreenContainer}>
         <Ad />
@@ -92,11 +151,15 @@ class StationList extends Component<Props> {
 }
 
 const mapStateToProps = ({ allStations, settings }) => {
-  const { stations, loading } = allStations;
-  const { gasType, sortMethod } = settings;
+  const { stations, loading, location } = allStations;
+  const { gasType, sortMethod, distanceFilter } = settings;
 
-  return { stations, loading, gasType, sortMethod };
+  return { stations, location, distanceFilter, loading, gasType, sortMethod };
 };
 
 // wrap the compoennt in the Hoc to receive it's props
-export default connect(mapStateToProps, { getData })(StationList);
+export default connect(mapStateToProps, {
+  filterByDistance,
+  getData,
+  setLocation,
+})(StationList);

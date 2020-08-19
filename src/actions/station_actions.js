@@ -23,3 +23,9 @@ export const getData = () => {
       });
   };
 };
+
+export const filterByDistance = stations => {
+  return dispatch => {
+    sortByPrice(dispatch, stations);
+  };
+};

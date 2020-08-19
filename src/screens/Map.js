@@ -53,9 +53,9 @@ class Map extends Component<Props> {
       }
     );
 
-    // this.setState(() => ({
-    //   loading: false,
-    // }));
+    this.setState(() => ({
+      loading: false,
+    }));
   }
 
   renderMarkers() {
