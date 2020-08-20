@@ -7,7 +7,7 @@ import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import Geolocation from '@react-native-community/geolocation';
-import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import { check, PERMISSIONS } from 'react-native-permissions';
 
 import { setDistanceFilter, setGasType, setSelectSortMethod } from '../actions';
 import Ad from '../components/Ad';
@@ -28,38 +28,21 @@ class Settings extends Component<Props> {
   constructor(props) {
     super(props);
     this.setSortMethod = this.setSortMethod.bind(this);
-    this.state = { showModal: false };
+    this.state = { showModal: false, locationAccessGranted: false };
   }
   componentDidMount() {
-    check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
-      .then(result => {
-        switch (result) {
-          case RESULTS.UNAVAILABLE:
-            console.log(
-              'This feature is not available (on this device / in this context)'
-            );
-            break;
-          case RESULTS.DENIED:
-            console.log(
-              'The permission has not been requested / is denied but requestable'
-            );
-            break;
-          case RESULTS.GRANTED:
-            console.log('The permission is granted');
-            break;
-          case RESULTS.BLOCKED:
-            console.log('The permission is denied and not requestable anymore');
-            break;
-          default:
-            console.log('default');
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.checkPermission();
   }
+
   setSortMethod(itemValue) {
     this.props.setSelectSortMethod(itemValue);
+  }
+  checkPermission() {
+    check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(result => {
+      if (result === 'granted') {
+        this.setState({ locationAccessGranted: true });
+      }
+    });
   }
   showModal() {
     this.setState({ showModal: true });
@@ -124,24 +107,26 @@ class Settings extends Component<Props> {
                 </Text>
               </TouchableOpacity>
             </View>
-            <View>
-              <Text>Sía eftir fjarlægð</Text>
-              <Slider
-                step={10}
-                style={{ width: 250, height: 40 }}
-                minimumValue={10}
-                maximumValue={200}
-                minimumTrackTintColor="#000"
-                maximumTrackTintColor="#B8BDC0"
-                onValueChange={val => this.props.setDistanceFilter(val)}
-                value={parseInt(distanceFilter, 10)}
-              />
-              <Text>
-                {parseInt(distanceFilter, 10) < 200
-                  ? `${distanceFilter}km`
-                  : 'Engin sía'}
-              </Text>
-            </View>
+            {this.state.locationAccessGranted && (
+              <View style={Styles.sliderView}>
+                <Text style={Styles.baseText}>Sía eftir fjarlægð</Text>
+                <Slider
+                  step={20}
+                  style={{ width: 250, height: 40 }}
+                  minimumValue={10}
+                  maximumValue={200}
+                  minimumTrackTintColor="#000"
+                  maximumTrackTintColor="#B8BDC0"
+                  onValueChange={val => this.props.setDistanceFilter(val)}
+                  value={parseInt(distanceFilter, 10)}
+                />
+                <Text>
+                  {parseInt(distanceFilter, 10) < 200
+                    ? `${distanceFilter}km`
+                    : 'Engin sía'}
+                </Text>
+              </View>
+            )}
             <Text style={Styles.sectionHeader}>Röð Lista?</Text>
             <TouchableOpacity
               onPress={this.showModal.bind(this)}

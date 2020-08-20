@@ -5,7 +5,7 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  distanceFilter: '20',
+  distanceFilter: '30',
   gasType: '95',
   sortMethod: 'priceLow',
 };

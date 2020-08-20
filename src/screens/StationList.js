@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { sortBy } from 'lodash';
 import Geolocation from '@react-native-community/geolocation';
 
-import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import { check, PERMISSIONS } from 'react-native-permissions';
 import { getData, setLocation, filterByDistance } from '../actions';
 import { listStyle, ScreenContainer } from '../styles';
 import styles from '../styles/stationScreen';
@@ -23,6 +23,7 @@ type Props = {
   stations: Array<object>,
   getData: () => void,
   setLocation: () => object,
+  filterByDistance: () => void,
 };
 
 class StationList extends Component<Props> {
@@ -39,7 +40,7 @@ class StationList extends Component<Props> {
     this.getDate();
   }
 
-  componentDidUpdate(prevState, prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       this.filterByDistance();
     }
@@ -81,7 +82,6 @@ class StationList extends Component<Props> {
             return dist < distanceFilter;
           });
           this.props.filterByDistance(filteredStations);
-          console.log(filteredStations);
         }
       })
       .catch(error => {

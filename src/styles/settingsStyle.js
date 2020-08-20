@@ -5,6 +5,9 @@ export default {
     flex: 1,
     backgroundColor: '#fff',
   },
+  baseText: {
+    fontSize: 16,
+  },
   buttonTypeLeft: {
     paddingLeft: 40,
     paddingTop: 8,
@@ -14,6 +17,10 @@ export default {
     paddingRight: 40,
     paddingTop: 8,
     paddingBottom: 8,
+  },
+  sliderView: {
+    marginTop: 15,
+    marginBottom: 30,
   },
   selectedStyle: {
     backgroundColor: '#233446',
@@ -39,7 +46,7 @@ export default {
   },
   typeContainer: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   sectionHeader: {
     fontSize: 18,
@@ -81,6 +88,6 @@ export default {
   },
   modalContent: {
     backgroundColor: '#fff',
-    alignItems: 'flex-end'
-  }
+    alignItems: 'flex-end',
+  },
 };
